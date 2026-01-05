@@ -1,0 +1,49 @@
+# .NET
+kourain-minimalapi-cloudflare.sln
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+secrets.json
+
+# Cloudflare
+.wrangler/
+node_modules/
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.eslintcache
+
+# OS
+Thumbs.db
+
+# Package managers
+package-lock.json
+yarn.lock
+
+# Build outputs
+publish/
