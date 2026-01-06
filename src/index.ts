@@ -3,9 +3,12 @@ import { Container, getRandom, getContainer } from '@cloudflare/containers'; // 
 export class MyContainer extends Container {
     defaultPort = 8080; // The default port for the container to listen on
     sleepAfter = '1m'; // Sleep the container if no requests are made in this timeframe
+    static readonly InstanceCount = 1;
 
     // default env vars to set in the container when starting
     envVars = {
+        // contaner env vars: 
+        // python code can access via os.environ['MESSAGE']
         MESSAGE: 'I was passed in via the container class!',
     };
 
@@ -38,7 +41,7 @@ export default {
         const timeoutId = setTimeout(() => controller.abort(), TIMEOUT * 1000);
 
         try {
-            const containerInstance = getContainer(env.MY_CONTAINER, `${pathname}`);
+            const containerInstance = await getRandom(env.MY_CONTAINER, MyContainer.InstanceCount);
 
             // Clone request và thêm signal
             const requestWithTimeout = new Request(request, {
