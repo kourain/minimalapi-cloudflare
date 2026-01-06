@@ -1,40 +1,53 @@
 # .NET C# Cloudflare Containers
 
-[![Build and Push](https://github.com/kourain/minimalapi-cloudflare/actions/workflows/cloudflare-deploy.yml/badge.svg)](https://github.com/kourain/minimalapi-cloudflare/actions/workflows/cloudflare-deploy.yml)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/kourain/.net-cloudflare-containers/tree/main)
 
-Mẫu template hoàn chỉnh để triển khai .NET 9 Minimal API lên **Cloudflare Containers** với CI/CD tự động.
+Complete template for deploying .NET 9 Minimal API to **Cloudflare Containers** with CI/CD.
 
 ## 🚀 Features
 
 - ✅ .NET 9 Minimal API
-- 🐳 Docker multi-stage build (tối ưu image size)
+- 🐳 Docker multi-stage build (optimized image size)
 - ☁️ Cloudflare Containers ready
 - 📊 Health check endpoints
 - 🎯 Production-ready configuration
 - 📝 Comprehensive documentation
-- 🛠️ Make commands để dễ dàng quản lý
 
-## 📋 Yêu cầu
+## 📋 Requirements
 
-- **Tài khoản Cloudflare** (với Containers enabled: min 5 USD / Month)
-- **.NET 9 SDK** (tùy chọn, cho quá trình phát triển)
+- **Cloudflare Account** (with Containers enabled: min 5 USD / Month)
+- **.NET 9 SDK** (optional, for development)
 - **Git** & **GitHub Account**
 
-### Change Container Name
+## Setup
+
+### 1. Change Container Name
 
 1. Open ``wrangler.jsonc``
 2. Change ``containers.name``
 
-### Instances Count ( Load Balancing )
-  # BẠN BUỘC PHẢI ĐỂ SỐ LƯỢNG INSTANCE GIỐNG NHAU VÀ > 0 (Default: 1 ~ Load balancing OFF)
+### 2. Instances Count ( Load Balancing )
+
+YOU MUST KEEP THE INSTANCE COUNT THE SAME AND > 0 (Default: 1 ~ Load balancing OFF)
+
 1. Open ``/src/index.ts``
   - Change ``MyContainer.InstanceCount``
 2. Open ``wrangler.jsonc``
   - Change ``containers.max_instances``
 
+### 3. Performance
+
+1. Open ``/src/index.ts``
+2. vCPU ( 1 - 16 ):
+  - Change ``containers.instance_type.vcpu``
+3. Ram ( 256 - 12288 ~ 250MB - 12GB ):
+  - Change ``containers.instance_type.memory_mib``
+4. Disk ( max 20480 ~ 20GB )
+  - Change ``containers.instance_type.disk_mb``
+
 ## ☁️ Cloudflare Deployment
 
-### Automatic Deployment
+### 1. Automatic Deployment
 
 1. **Open Cloudflare Worker-Page Dashboard**
    - Create Application -> Link Github Repo
@@ -47,7 +60,7 @@ Mẫu template hoàn chỉnh để triển khai .NET 9 Minimal API lên **Cloudf
 
 3. **Monitor** in Dashboard
 
-### Manual Deployment
+### 2. Manual Deployment
 
 ```bash
 # Login
@@ -57,16 +70,16 @@ wrangler login
 wrangler deploy
 ```
 
-### Github CI/CD
+### 3. Github CI/CD
 
-1. Đổi tên ``.github/workflows/cloudflare-deploy.yml.txt`` -> ``.github/workflows/cloudflare-deploy.yml.txt``
-2. Thêm Github Secret: ``CLOUDFLARE_API_TOKEN``
-   Xem: https://developers.cloudflare.com/fundamentals/api/get-started/create-token
+1. Rename ``.github/workflows/cloudflare-deploy.yml.txt`` -> ``.github/workflows/cloudflare-deploy.yml``
+2. Add Github Secret: ``CLOUDFLARE_API_TOKEN``
+   See: https://developers.cloudflare.com/fundamentals/api/get-started/create-token
 
 ## 💬 Support
 
-- GitHub Issues: Báo bug hoặc request features
-- Discussions: Hỏi đáp kỹ thuật
+- GitHub Issues: Report bugs or request features
+- Discussions: Technical Q&A
 
 ---
 

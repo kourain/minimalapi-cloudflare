@@ -1,6 +1,6 @@
 {
     "name": "kourain-template",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "private": true,
     "scripts": {
         "deploy": "wrangler deploy",
@@ -9,11 +9,11 @@
         "cf-typegen": "wrangler types"
     },
     "devDependencies": {
-        "@cloudflare/workers-types": "^4.20260103.0",
-        "typescript": "^5.9.3",
-        "wrangler": "^4.54.0"
+        "@cloudflare/workers-types": "latest",
+        "typescript": "latest",
+        "wrangler": "latest"
     },
     "dependencies": {
-        "@cloudflare/containers": "0.0.31"
+        "@cloudflare/containers": "latest"
     }
 }

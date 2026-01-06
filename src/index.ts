@@ -2,9 +2,9 @@ import { Container, getRandom, getContainer } from '@cloudflare/containers'; // 
 
 export class MyContainer extends Container {
     defaultPort = 8080; // The default port for the container to listen on
-    sleepAfter = '1m'; // Sleep the container if no requests are made in this timeframe
+    sleepAfter = '15s'; // Sleep the container if no requests are made in this timeframe
     static readonly InstanceCount = 1;
-
+    static readonly Timeout = 10; // seconds
     // default env vars to set in the container when starting
     envVars = {
         // contaner env vars: 
@@ -34,11 +34,16 @@ export default {
         const pathname = new URL(request.url).pathname;
         // If you want to route requests to a specific container,
         // pass a unique container identifier to .get()
-
+        if (pathname.startsWith('/alive')) {
+            return new Response(JSON.stringify({ status: "alive", message: "Worker alive" }), {
+                status: 200,
+                statusText: 'OK',
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
         // Cách 3: Sử dụng AbortController để cancel request thực sự
-        const TIMEOUT = 30;
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT * 1000);
+        const timeoutId = setTimeout(() => controller.abort(), MyContainer.Timeout * 1000);
 
         try {
             const containerInstance = await getRandom(env.MY_CONTAINER, MyContainer.InstanceCount);
@@ -55,7 +60,7 @@ export default {
         } catch (error: any) {
             clearTimeout(timeoutId);
             if (error.name === 'AbortError') {
-                return new Response(`Request timeout after ${TIMEOUT} seconds`, {
+                return new Response(`Request timeout after ${MyContainer.Timeout} seconds`, {
                     status: 504,
                     statusText: 'Gateway Timeout',
                     headers: { 'Content-Type': 'text/plain' }

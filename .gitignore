@@ -1,5 +1,5 @@
 # .NET
-kourain-minimalapi-cloudflare.sln
+*.sln
 bin/
 obj/
 *.user
