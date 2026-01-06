@@ -26,7 +26,7 @@ export class MyContainer extends Container {
 export default {
     async fetch(
         request: Request,
-        env: { MY_CONTAINER: DurableObjectNamespace<MyContainer> }
+        env: Env
     ): Promise<Response> {
         const pathname = new URL(request.url).pathname;
         // If you want to route requests to a specific container,
